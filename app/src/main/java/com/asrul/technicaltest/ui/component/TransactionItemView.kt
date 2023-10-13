@@ -1,6 +1,6 @@
 package com.asrul.technicaltest.ui.component
 
-import TransactionIcon
+import com.asrul.technicaltest.ui.component.assets.TransactionIcon
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -32,7 +32,7 @@ import com.asrul.technicaltest.ui.theme.AppRed
 import com.asrul.technicaltest.util.toRupiahFormat
 
 @Composable
-fun TransactionItem(
+fun TransactionItemView(
     modifier: Modifier = Modifier,
     transaction: Transaction,
     isLastItem: Boolean = false

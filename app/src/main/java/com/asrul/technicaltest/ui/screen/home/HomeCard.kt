@@ -1,6 +1,6 @@
 package com.asrul.technicaltest.ui.screen.home
 
-import AccountCardBackground
+import com.asrul.technicaltest.ui.component.assets.AccountCardBackground
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

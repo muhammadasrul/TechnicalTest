@@ -1,3 +1,5 @@
+package com.asrul.technicaltest.ui.component.assets
+
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathFillType
 import androidx.compose.ui.graphics.SolidColor
@@ -16,7 +18,7 @@ val TransactionIcon: ImageVector
             return vector!!
         }
         vector = ImageVector.Builder(
-            name = "vector",
+            name = "com.asrul.technicaltest.ui.component.assets.vector",
             defaultWidth = 20.dp,
             defaultHeight = 20.dp,
             viewportWidth = 20f,

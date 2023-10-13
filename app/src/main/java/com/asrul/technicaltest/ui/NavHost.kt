@@ -5,16 +5,21 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import com.asrul.technicaltest.domain.model.toJsonString
 import com.asrul.technicaltest.ui.screen.history.navigateToTransactionHistory
 import com.asrul.technicaltest.ui.screen.history.transactionHistoryScreen
 import com.asrul.technicaltest.ui.screen.home.homeNavigationRoute
 import com.asrul.technicaltest.ui.screen.home.homeScreen
 import com.asrul.technicaltest.ui.screen.home.navigateToHome
-import com.asrul.technicaltest.ui.screen.qrscanner.navigateToReceipt
+import com.asrul.technicaltest.ui.screen.promo.navigateToPromoDetail
+import com.asrul.technicaltest.ui.screen.promo.navigateToPromoList
+import com.asrul.technicaltest.ui.screen.promo.promoDetailScreen
+import com.asrul.technicaltest.ui.screen.promo.promoListScreen
 import com.asrul.technicaltest.ui.screen.qrscanner.navigateToQrScanner
+import com.asrul.technicaltest.ui.screen.qrscanner.navigateToReceipt
 import com.asrul.technicaltest.ui.screen.qrscanner.qrResultNavigationRoute
-import com.asrul.technicaltest.ui.screen.qrscanner.receiptScreen
 import com.asrul.technicaltest.ui.screen.qrscanner.qrScannerScreen
+import com.asrul.technicaltest.ui.screen.qrscanner.receiptScreen
 import com.google.gson.Gson
 
 @Composable
@@ -30,6 +35,7 @@ fun NavGraph(
         homeScreen(
             goToHistory = navHostController::navigateToTransactionHistory,
             goToQrScanner = navHostController::navigateToQrScanner,
+            goToPromo = navHostController::navigateToPromoList,
             finishAffinity = finishAffinity
         )
         transactionHistoryScreen {
@@ -46,6 +52,17 @@ fun NavGraph(
             navHostController.navigateToHome(
                 navOptions { popUpTo(qrResultNavigationRoute) }
             )
+        }
+        promoListScreen(
+            onBackPressed = {
+                navHostController.navigateUp()
+            },
+            onClicked = { promo ->
+                navHostController.navigateToPromoDetail(promo.toJsonString())
+            }
+        )
+        promoDetailScreen {
+            navHostController.navigateUp()
         }
     }
 }

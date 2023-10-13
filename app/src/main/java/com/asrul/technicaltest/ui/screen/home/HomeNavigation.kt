@@ -17,6 +17,7 @@ fun NavController.navigateToHome(navOptions: NavOptions? = null) {
 fun NavGraphBuilder.homeScreen(
     goToHistory: () -> Unit,
     goToQrScanner: () -> Unit,
+    goToPromo: () -> Unit,
     finishAffinity: () -> Unit
 ) {
     composable(homeNavigationRoute) {
@@ -31,7 +32,8 @@ fun NavGraphBuilder.homeScreen(
             transactionState = transactionState.value,
             userState = userState.value,
             goToHistory = goToHistory,
-            gotoQrScanner = goToQrScanner
+            goToQrScanner = goToQrScanner,
+            goToPromo = goToPromo
         )
     }
 }

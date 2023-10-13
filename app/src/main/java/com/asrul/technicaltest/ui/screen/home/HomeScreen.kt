@@ -30,17 +30,22 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.asrul.technicaltest.domain.model.User
 import com.asrul.technicaltest.ui.component.ErrorView
+import com.asrul.technicaltest.ui.component.MenuIcon
 import com.asrul.technicaltest.ui.component.PrimaryButton
-import com.asrul.technicaltest.ui.component.TransactionItem
+import com.asrul.technicaltest.ui.component.TransactionItemView
 import com.asrul.technicaltest.ui.component.TransactionSkeleton
+import com.asrul.technicaltest.ui.component.assets.DiscountIcon
+import com.asrul.technicaltest.ui.component.assets.QuestionIcon
 import com.asrul.technicaltest.ui.theme.AppBlueDark
+import com.asrul.technicaltest.ui.theme.AppYellow
 
 @Composable
 internal fun HomeScreen(
     transactionState: TransactionHistoryState,
     userState: UserState,
     goToHistory: () -> Unit,
-    gotoQrScanner: () -> Unit
+    goToQrScanner: () -> Unit,
+    goToPromo: () -> Unit
 ) {
     Scaffold { paddingValues ->
         Surface {
@@ -57,6 +62,39 @@ internal fun HomeScreen(
                             currentBalance = userState.data?.currentBalance ?: 0.0,
                             usedInAMonth = transactionState.usedInMonth
                         )
+                    }
+                    item {
+                        Row(
+                            modifier = Modifier
+                                .padding(bottom = 8.dp)
+                                .fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceEvenly
+                        ) {
+                            MenuIcon(
+                                color = AppYellow,
+                                name = "Promo",
+                                iconVector = DiscountIcon,
+                                onClicked = goToPromo
+                            )
+                            MenuIcon(
+                                color = AppBlueDark,
+                                name = "Dummy",
+                                iconVector = QuestionIcon,
+                                onClicked = {}
+                            )
+                            MenuIcon(
+                                color = AppBlueDark,
+                                name = "Dummy",
+                                iconVector = QuestionIcon,
+                                onClicked = {}
+                            )
+                            MenuIcon(
+                                color = AppBlueDark,
+                                name = "Dummy",
+                                iconVector = QuestionIcon,
+                                onClicked = {}
+                            )
+                        }
                     }
                     item {
                         Row(
@@ -129,7 +167,7 @@ internal fun HomeScreen(
                                 )
                             }
                             itemsIndexed(items = it.value) { index, item ->
-                                TransactionItem(
+                                TransactionItemView(
                                     modifier = Modifier.padding(horizontal = 14.dp),
                                     transaction = item,
                                     isLastItem = index == it.value.lastIndex
@@ -143,7 +181,7 @@ internal fun HomeScreen(
                     modifier = Modifier
                         .padding(vertical = 24.dp, horizontal = 18.dp)
                         .fillMaxWidth(),
-                    text = "QR Scanner", action = gotoQrScanner
+                    text = "QR Scanner", action = goToQrScanner
                 )
             }
         }
@@ -164,6 +202,7 @@ fun HomeScreenPreview() {
             )
         ),
         goToHistory = {},
-        gotoQrScanner = {}
+        goToQrScanner = {},
+        goToPromo = {}
     )
 }

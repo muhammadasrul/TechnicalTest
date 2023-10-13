@@ -4,6 +4,8 @@ import com.asrul.technicaltest.data.Resource
 import com.asrul.technicaltest.data.datastore.UserDataStore
 import com.asrul.technicaltest.data.local.dao.TransactionDao
 import com.asrul.technicaltest.data.local.entity.TransactionEntity
+import com.asrul.technicaltest.data.remote.ApiService
+import com.asrul.technicaltest.data.remote.response.PromoResponse
 import com.asrul.technicaltest.domain.model.Transaction
 import com.asrul.technicaltest.domain.model.User
 import com.asrul.technicaltest.domain.model.generateInitialUser
@@ -13,10 +15,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
+import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
+    private val apiService: ApiService,
     private val dao: TransactionDao,
     private val dataStore: UserDataStore
 ) : Repository {
@@ -80,6 +84,20 @@ class RepositoryImpl @Inject constructor(
                 )
             }
             emit(Resource.Success(it))
+        }
+    }
+
+    override fun getPromoList(): Flow<Resource<PromoResponse>> = flow {
+        emit(Resource.Loading())
+        try {
+            val data = apiService.getPromoList()
+            emit(Resource.Success(data = data))
+        } catch (e: HttpException) {
+            emit(Resource.Error(e.message ?: "An unexpected error occurred"))
+        } catch (e: IOException) {
+            emit(Resource.Error(e.message ?: "An unexpected error occurred"))
+        } catch (e: Exception) {
+            emit(Resource.Error(e.message ?: "An unexpected error occurred"))
         }
     }
 

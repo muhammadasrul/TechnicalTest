@@ -1,4 +1,4 @@
-package com.asrul.technicaltest.ui.screen.history
+package com.asrul.technicaltest.ui.screen.promo
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -19,27 +19,26 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color.Companion.Black
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.asrul.technicaltest.domain.model.Promo
 import com.asrul.technicaltest.ui.component.ErrorView
-import com.asrul.technicaltest.ui.component.TransactionItemView
+import com.asrul.technicaltest.ui.component.PromoItemView
 import com.asrul.technicaltest.ui.component.TransactionSkeleton
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun TransactionHistoryScreen(
-    state: TransactionHistoryState,
-    onBackPressed: () -> Unit
+fun PromoListScreen(
+    state: PromoState,
+    onBackPressed: () -> Unit,
+    onClicked: (Promo) -> Unit
 ) {
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
                     Text(
-                        text = "Transaction History",
+                        text = "Promo List",
                         style = MaterialTheme.typography.headlineMedium,
                     )
                 },
@@ -48,7 +47,7 @@ internal fun TransactionHistoryScreen(
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
                             contentDescription = "Close",
-                            tint = Black
+                            tint = Color.Black
                         )
                     }
                 }
@@ -72,45 +71,19 @@ internal fun TransactionHistoryScreen(
                                 modifier = Modifier
                                     .height(600.dp)
                                     .fillMaxSize(),
-                                title = if (state.data.isEmpty()) "No Transaction" else "Oops, Sorry",
+                                title = if (state.data.isEmpty()) "Currently, no promotions available. Stay tuned for future offers!" else "Oops, Sorry",
                                 message = state.error,
-                                textColor = Black
+                                textColor = Color.Black
                             )
                         }
                     }
                     if (!state.isLoading && state.error.isEmpty()) {
-                        state.data.forEach {
-                            item {
-                                Text(
-                                    modifier = Modifier.padding(
-                                        top = 20.dp,
-                                        bottom = 8.dp,
-                                        start = 24.dp,
-                                        end = 24.dp
-                                    ),
-                                    text = it.key,
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 14.sp,
-                                    color = Black
-                                )
-                            }
-                            itemsIndexed(items = it.value) { index, item ->
-                                TransactionItemView(
-                                    modifier = Modifier.padding(horizontal = 14.dp),
-                                    transaction = item,
-                                    isLastItem = index == it.value.lastIndex
-                                )
-                            }
+                        items(items = state.data) { item ->
+                            PromoItemView(promo = item, onClicked = { onClicked(it) })
                         }
                     }
                 }
             }
         }
     }
-}
-
-@Preview
-@Composable
-private fun TransactionHistoryScreenPreview() {
-    TransactionHistoryScreen(state = TransactionHistoryState(error = "Error")) {}
 }

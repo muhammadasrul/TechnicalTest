@@ -42,6 +42,13 @@ val Typography = Typography(
         lineHeight = 28.sp,
         letterSpacing = 0.sp
     ),
+    titleMedium = TextStyle(
+        fontFamily = poppins,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp,
+        lineHeight = 28.sp,
+        letterSpacing = 0.sp
+    ),
     labelSmall = TextStyle(
         fontFamily = poppins,
         fontWeight = FontWeight.Medium,
