@@ -35,6 +35,12 @@ fun Long.toFormattedDate(): String {
     return sdf.format(Date(this))
 }
 
+fun String.toDateFormat(): String {
+    val oldSdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+    val newSdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+    return oldSdf.parse(this)?.let { newSdf.format(it) } ?: "-"
+}
+
 fun String.toQrResultDTO(): QrResult? {
     val resultString = split(".")
     return try {

@@ -5,7 +5,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import com.asrul.technicaltest.data.local.model.toJsonString
 import com.asrul.technicaltest.domain.model.toJsonString
+import com.asrul.technicaltest.ui.screen.portfolio.navigateToPortfolio
+import com.asrul.technicaltest.ui.screen.portfolio.navigateToPortfolioDetail
+import com.asrul.technicaltest.ui.screen.portfolio.portfolioDetailScreen
+import com.asrul.technicaltest.ui.screen.portfolio.portfolioScreen
 import com.asrul.technicaltest.ui.screen.history.navigateToTransactionHistory
 import com.asrul.technicaltest.ui.screen.history.transactionHistoryScreen
 import com.asrul.technicaltest.ui.screen.home.homeNavigationRoute
@@ -36,11 +41,10 @@ fun NavGraph(
             goToHistory = navHostController::navigateToTransactionHistory,
             goToQrScanner = navHostController::navigateToQrScanner,
             goToPromo = navHostController::navigateToPromoList,
+            goToPortfolio = navHostController::navigateToPortfolio,
             finishAffinity = finishAffinity
         )
-        transactionHistoryScreen {
-            navHostController.navigateUp()
-        }
+        transactionHistoryScreen(navHostController::navigateUp)
         qrScannerScreen(
             onCloseClicked = navHostController::navigateUp,
             onQrScanned = { result ->
@@ -54,15 +58,18 @@ fun NavGraph(
             )
         }
         promoListScreen(
-            onBackPressed = {
-                navHostController.navigateUp()
-            },
+            onBackPressed = navHostController::navigateUp,
             onClicked = { promo ->
                 navHostController.navigateToPromoDetail(promo.toJsonString())
             }
         )
-        promoDetailScreen {
-            navHostController.navigateUp()
-        }
+        promoDetailScreen(navHostController::navigateUp)
+        portfolioScreen(
+            goToDetailPortfolio = {
+                navHostController.navigateToPortfolioDetail(it.toJsonString())
+            },
+            onBackPressed = navHostController::navigateUp
+        )
+        portfolioDetailScreen(navHostController::navigateUp)
     }
 }

@@ -18,6 +18,7 @@ fun NavGraphBuilder.homeScreen(
     goToHistory: () -> Unit,
     goToQrScanner: () -> Unit,
     goToPromo: () -> Unit,
+    goToPortfolio: () -> Unit,
     finishAffinity: () -> Unit
 ) {
     composable(homeNavigationRoute) {
@@ -33,7 +34,8 @@ fun NavGraphBuilder.homeScreen(
             userState = userState.value,
             goToHistory = goToHistory,
             goToQrScanner = goToQrScanner,
-            goToPromo = goToPromo
+            goToPromo = goToPromo,
+            goToPortfolio = goToPortfolio
         )
     }
 }

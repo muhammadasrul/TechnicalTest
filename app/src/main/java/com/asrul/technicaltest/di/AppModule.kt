@@ -3,11 +3,14 @@ package com.asrul.technicaltest.di
 import android.content.Context
 import androidx.room.Room
 import com.asrul.technicaltest.data.datastore.UserDataStore
+import com.asrul.technicaltest.data.local.PortfolioDataSource
 import com.asrul.technicaltest.data.local.dao.TransactionDao
 import com.asrul.technicaltest.data.local.database.AppDatabase
 import com.asrul.technicaltest.data.remote.ApiService
 import com.asrul.technicaltest.data.repository.RepositoryImpl
 import com.asrul.technicaltest.domain.repository.Repository
+import com.asrul.technicaltest.domain.usecase.PortfolioUseCase
+import com.asrul.technicaltest.domain.usecase.PortfolioUseCaseInteractor
 import com.asrul.technicaltest.domain.usecase.PromoUseCase
 import com.asrul.technicaltest.domain.usecase.PromoUseCaseInteractor
 import com.asrul.technicaltest.domain.usecase.TransactionUseCase
@@ -28,6 +31,11 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
+    @Provides
+    fun provideDataSource(@ApplicationContext context: Context): PortfolioDataSource {
+        return PortfolioDataSource(context)
+    }
 
     @Singleton
     @Provides
@@ -63,7 +71,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideRepository(apiService: ApiService, dao: TransactionDao, userDataStore: UserDataStore): Repository = RepositoryImpl(apiService, dao, userDataStore)
+    fun provideRepository(dataSource: PortfolioDataSource, apiService: ApiService, dao: TransactionDao, userDataStore: UserDataStore): Repository = RepositoryImpl(dataSource, apiService, dao, userDataStore)
 
     @Singleton
     @Provides
@@ -76,4 +84,9 @@ object AppModule {
     @Singleton
     @Provides
     fun providePromoUseCase(repository: Repository): PromoUseCase = PromoUseCaseInteractor(repository)
+
+    @Provides
+    fun provideUseCase(repository: Repository): PortfolioUseCase {
+        return PortfolioUseCaseInteractor(repository)
+    }
 }

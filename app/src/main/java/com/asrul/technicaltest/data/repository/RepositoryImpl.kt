@@ -2,10 +2,12 @@ package com.asrul.technicaltest.data.repository
 
 import com.asrul.technicaltest.data.Resource
 import com.asrul.technicaltest.data.datastore.UserDataStore
+import com.asrul.technicaltest.data.local.PortfolioDataSource
 import com.asrul.technicaltest.data.local.dao.TransactionDao
 import com.asrul.technicaltest.data.local.entity.TransactionEntity
 import com.asrul.technicaltest.data.remote.ApiService
 import com.asrul.technicaltest.data.remote.response.PromoResponse
+import com.asrul.technicaltest.domain.model.Portfolio
 import com.asrul.technicaltest.domain.model.Transaction
 import com.asrul.technicaltest.domain.model.User
 import com.asrul.technicaltest.domain.model.generateInitialUser
@@ -20,6 +22,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
+    private val dataSource: PortfolioDataSource,
     private val apiService: ApiService,
     private val dao: TransactionDao,
     private val dataStore: UserDataStore
@@ -98,6 +101,18 @@ class RepositoryImpl @Inject constructor(
             emit(Resource.Error(e.message ?: "An unexpected error occurred"))
         } catch (e: Exception) {
             emit(Resource.Error(e.message ?: "An unexpected error occurred"))
+        }
+    }
+
+    override fun getPortfolioData(): Flow<Resource<Portfolio>> = flow {
+        emit(Resource.Loading())
+        try {
+            val portfolio = dataSource.getPortfolioData()
+            emit(Resource.Success(data = portfolio))
+        } catch (e: IOException) {
+            emit(Resource.Error(message = e.message ?: "Unexpected error occurred."))
+        } catch (e: Exception) {
+            emit(Resource.Error(message = e.message ?: "Unexpected error occurred."))
         }
     }
 

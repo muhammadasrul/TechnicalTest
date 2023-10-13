@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId = "com.asrul.technicaltest"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -87,6 +87,8 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor")
 
     implementation("io.coil-kt:coil-compose:2.4.0")
+
+    implementation("co.yml:ycharts:2.1.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

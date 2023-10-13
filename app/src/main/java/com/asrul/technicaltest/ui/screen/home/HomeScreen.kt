@@ -34,6 +34,7 @@ import com.asrul.technicaltest.ui.component.MenuIcon
 import com.asrul.technicaltest.ui.component.PrimaryButton
 import com.asrul.technicaltest.ui.component.TransactionItemView
 import com.asrul.technicaltest.ui.component.TransactionSkeleton
+import com.asrul.technicaltest.ui.component.assets.ChartIcon
 import com.asrul.technicaltest.ui.component.assets.DiscountIcon
 import com.asrul.technicaltest.ui.component.assets.QuestionIcon
 import com.asrul.technicaltest.ui.theme.AppBlueDark
@@ -45,7 +46,8 @@ internal fun HomeScreen(
     userState: UserState,
     goToHistory: () -> Unit,
     goToQrScanner: () -> Unit,
-    goToPromo: () -> Unit
+    goToPromo: () -> Unit,
+    goToPortfolio: () -> Unit
 ) {
     Scaffold { paddingValues ->
         Surface {
@@ -78,9 +80,9 @@ internal fun HomeScreen(
                             )
                             MenuIcon(
                                 color = AppBlueDark,
-                                name = "Dummy",
-                                iconVector = QuestionIcon,
-                                onClicked = {}
+                                name = "Portfolio",
+                                iconVector = ChartIcon,
+                                onClicked = goToPortfolio
                             )
                             MenuIcon(
                                 color = AppBlueDark,
@@ -203,6 +205,7 @@ fun HomeScreenPreview() {
         ),
         goToHistory = {},
         goToQrScanner = {},
-        goToPromo = {}
+        goToPromo = {},
+        goToPortfolio = {}
     )
 }
