@@ -1,4 +1,4 @@
-package com.asrul.technicaltest.ui.screen.home
+package com.asrul.technicaltest.util
 
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Outline
@@ -7,7 +7,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 
-class CustomShape: Shape {
+class CurveShape: Shape {
     override fun createOutline(
         size: Size,
         layoutDirection: LayoutDirection,

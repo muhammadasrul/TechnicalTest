@@ -42,6 +42,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import com.asrul.technicaltest.domain.model.User
 import com.asrul.technicaltest.ui.component.ErrorView
+import com.asrul.technicaltest.ui.component.HomeCard
 import com.asrul.technicaltest.ui.component.MenuIcon
 import com.asrul.technicaltest.ui.component.PrimaryButton
 import com.asrul.technicaltest.ui.component.TransactionItemView

@@ -1,4 +1,4 @@
-package com.asrul.technicaltest.ui.screen.home
+package com.asrul.technicaltest.ui.component
 
 import com.asrul.technicaltest.ui.component.assets.AccountCardBackground
 import androidx.compose.foundation.Image
@@ -31,6 +31,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.asrul.technicaltest.ui.theme.AppBlue
+import com.asrul.technicaltest.util.CurveShape
 import com.asrul.technicaltest.util.toRupiahFormat
 
 @Composable
@@ -42,7 +43,7 @@ fun HomeCard(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(CustomShape())
+            .clip(CurveShape())
     ) {
         Box(
             modifier = Modifier

@@ -39,6 +39,7 @@ import com.asrul.technicaltest.domain.model.User
 import com.asrul.technicaltest.ui.component.PrimaryButton
 import com.asrul.technicaltest.ui.theme.AppBlue
 import com.asrul.technicaltest.ui.theme.AppBlueDark
+import com.asrul.technicaltest.util.WaveShape
 import com.asrul.technicaltest.util.toRupiahFormat
 
 @Composable
