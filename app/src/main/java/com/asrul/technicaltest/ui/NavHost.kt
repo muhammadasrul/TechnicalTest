@@ -20,6 +20,8 @@ import com.asrul.technicaltest.ui.screen.promo.navigateToPromoDetail
 import com.asrul.technicaltest.ui.screen.promo.navigateToPromoList
 import com.asrul.technicaltest.ui.screen.promo.promoDetailScreen
 import com.asrul.technicaltest.ui.screen.promo.promoListScreen
+import com.asrul.technicaltest.ui.screen.pushnotif.navigateToNotificationDetail
+import com.asrul.technicaltest.ui.screen.pushnotif.pushNotificationDetail
 import com.asrul.technicaltest.ui.screen.qrscanner.navigateToQrScanner
 import com.asrul.technicaltest.ui.screen.qrscanner.navigateToReceipt
 import com.asrul.technicaltest.ui.screen.qrscanner.qrResultNavigationRoute
@@ -42,6 +44,12 @@ fun NavGraph(
             goToQrScanner = navHostController::navigateToQrScanner,
             goToPromo = navHostController::navigateToPromoList,
             goToPortfolio = navHostController::navigateToPortfolio,
+            goToNotification = {
+                navHostController.navigateToNotificationDetail(
+                    title = "habitasse",
+                    transactionCode = "mutat"
+                )
+            },
             finishAffinity = finishAffinity
         )
         transactionHistoryScreen(navHostController::navigateUp)
@@ -71,5 +79,6 @@ fun NavGraph(
             onBackPressed = navHostController::navigateUp
         )
         portfolioDetailScreen(navHostController::navigateUp)
+        pushNotificationDetail(navHostController::navigateUp)
     }
 }

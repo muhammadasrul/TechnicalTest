@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "5976735601",
+    "project_id": "notif-eca5b",
+    "storage_bucket": "notif-eca5b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:5976735601:android:741ff902fd6df449a540d0",
+        "android_client_info": {
+          "package_name": "com.asrul.technicaltest"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCahH4bvxdwtBbHhDAnkUSgQv2MZZsTsg4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

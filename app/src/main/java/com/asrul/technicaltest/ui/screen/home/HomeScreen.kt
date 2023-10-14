@@ -1,5 +1,10 @@
 package com.asrul.technicaltest.ui.screen.home
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -20,14 +25,21 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import com.asrul.technicaltest.domain.model.User
 import com.asrul.technicaltest.ui.component.ErrorView
 import com.asrul.technicaltest.ui.component.MenuIcon
@@ -38,6 +50,7 @@ import com.asrul.technicaltest.ui.component.assets.ChartIcon
 import com.asrul.technicaltest.ui.component.assets.DiscountIcon
 import com.asrul.technicaltest.ui.component.assets.QuestionIcon
 import com.asrul.technicaltest.ui.theme.AppBlueDark
+import com.asrul.technicaltest.ui.theme.AppRed
 import com.asrul.technicaltest.ui.theme.AppYellow
 
 @Composable
@@ -47,8 +60,33 @@ internal fun HomeScreen(
     goToHistory: () -> Unit,
     goToQrScanner: () -> Unit,
     goToPromo: () -> Unit,
-    goToPortfolio: () -> Unit
+    goToPortfolio: () -> Unit,
+    goToNotification: () -> Unit
 ) {
+    val ctx = LocalContext.current
+    var hasPermission by remember {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            mutableStateOf(
+                ContextCompat.checkSelfPermission(
+                    ctx,
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) == PackageManager.PERMISSION_GRANTED
+            )
+        } else {
+            mutableStateOf(false)
+        }
+    }
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission(),
+        onResult = { granted -> hasPermission = granted }
+    )
+
+    LaunchedEffect(key1 = true) {
+        if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) && !hasPermission) {
+            launcher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
+    }
+
     Scaffold { paddingValues ->
         Surface {
             Column(
@@ -85,10 +123,10 @@ internal fun HomeScreen(
                                 onClicked = goToPortfolio
                             )
                             MenuIcon(
-                                color = AppBlueDark,
-                                name = "Dummy",
+                                color = AppRed,
+                                name = "Notif",
                                 iconVector = QuestionIcon,
-                                onClicked = {}
+                                onClicked = goToNotification
                             )
                             MenuIcon(
                                 color = AppBlueDark,
@@ -206,6 +244,7 @@ fun HomeScreenPreview() {
         goToHistory = {},
         goToQrScanner = {},
         goToPromo = {},
-        goToPortfolio = {}
+        goToPortfolio = {},
+        goToNotification = {}
     )
 }
