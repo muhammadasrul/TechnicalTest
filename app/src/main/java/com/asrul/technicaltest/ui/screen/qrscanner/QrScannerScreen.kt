@@ -73,6 +73,7 @@ internal fun QrScannerScreen(
         onResult = { granted -> hasPermission = granted }
     )
     var isError by remember { mutableStateOf(false) }
+    var isScanned by remember { mutableStateOf(false) }
 
     LaunchedEffect(key1 = true) {
         launcher.launch(Manifest.permission.CAMERA)
@@ -124,7 +125,7 @@ internal fun QrScannerScreen(
                             QrCodeAnalyzer { qrResult ->
                                 val resultDto = qrResult.toQrResultDTO()
 
-                                if (resultDto != null) {
+                                if (resultDto != null && !isScanned) {
                                     val timeStamp = Calendar.getInstance().timeInMillis
                                     val transaction = TransactionEntity(
                                         transactionId = resultDto.transactionId,
@@ -133,6 +134,7 @@ internal fun QrScannerScreen(
                                         date = timeStamp
                                     )
                                     onQrScanned(transaction)
+                                    isScanned = true
                                 } else {
                                     isError = true
                                 }
@@ -185,6 +187,7 @@ internal fun QrScannerScreen(
                     actionText = "Ok"
                 ) {
                     isError = false
+                    isScanned = false
                     onHandled()
                 }
             }
