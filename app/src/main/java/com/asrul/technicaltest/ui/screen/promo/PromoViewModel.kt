@@ -25,7 +25,7 @@ class PromoViewModel @Inject constructor(
         getPromoList()
     }
 
-    private fun getPromoList() {
+    fun getPromoList() {
         viewModelScope.launch {
             promoUseCase.getPromoList().collect { resource ->
                 when (resource) {
